@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.connor.dao.ProviderDao">
+    <select id="findAll" parameterType="java.lang.String" resultType="com.connor.domain.Provider">
+        select * from smbms_provider
+        <if test="proName!=null and proName!=''">
+            where proName like concat('%',#{proName},'%')
+        </if>
+    </select>
+
+    <insert id="addProvider" parameterType="com.connor.domain.Provider">
+        insert into
+            smbms_provider(proCode,proName,proContact,proDesc,proPhone,proAddress,proFax,createdBy,creationDate,modifyBy,modifyDate)
+        values
+        (#{proCode},#{proName},#{proContact},#{proDesc},#{proPhone},#{proAddress},#{proFax},#{createdBy},#{creationDate},#{modifyBy},#{modifyDate})
+    </insert>
+
+    <select id="getProviderByCode" parameterType="java.lang.String" resultType="com.connor.domain.Provider">
+        select * from smbms_provider where proCode=#{proCode}
+    </select>
+
+    <update id="updateProvider" parameterType="com.connor.domain.Provider">
+        update smbms_provider
+        set
+            proCode=#{proCode},proName=#{proName},proDesc=#{proDesc},proContact=#{proContact},proPhone=#{proPhone},proFax=#{proFax},proAddress=#{proAddress},modifyBy=#{modifyBy},modifyDate=#{modifyDate}
+        where proCode=#{proCode}
+    </update>
+
+    <delete id="deleteProvider" parameterType="java.lang.String">
+        delete from smbms_provider where proCode=#{proCode}
+    </delete>
+</mapper>
